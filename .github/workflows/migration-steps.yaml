@@ -1,5 +1,5 @@
 ---
-name: Migrate a service gradually
+name: Migrate a service gradually ${{ inputs.fqdn }}
 
 on:
   workflow_dispatch:
@@ -7,6 +7,10 @@ on:
       fqdn:
         description: 'FQDN of the service to migrate'
         required: true
+      dc:
+        description: 'CHI1 or ASH1'
+        required: true
+        default: 'CHI1'
 
 jobs:
   pre-run-test:
@@ -23,10 +27,10 @@ jobs:
     environment: 10-percent
     steps:
       - name: Do 10%
+        id: do10
         run:
           echo "Setting 10%"
           echo "Here is your 10% resolution" >> $GITHUB_STEP_SUMMARY
-
 
   switch-to-50-percent:
     needs: pre-run-test
@@ -35,5 +39,25 @@ jobs:
     steps:
       - name: Do 50%
         run:
-          echo "Setting 10%"
-          echo "Here is your 10% resolution" >> $GITHUB_STEP_SUMMARY
+          echo "Setting 50%"
+          echo "Here is your 50% resolution" >> $GITHUB_STEP_SUMMARY
+
+  confirm-success:
+    needs: [switch-to-10-percent, switch-to-50-percent]
+    if: ${{ always()}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm success
+        run: |
+          echo "Confirming success"
+          echo "Here is your confirmation" >> $GITHUB_STEP_SUMMARY
+
+  rollback:
+    needs: confirm-success
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rollback
+        run: |
+          echo "Rolling back"
+          echo "Here is your rollback" >> $GITHUB_STEP_SUMMARY
