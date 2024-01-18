@@ -1,0 +1,39 @@
+---
+name: Migrate a service gradually
+
+on:
+  workflow_dispatch:
+    inputs:
+      fqdn:
+        description: 'FQDN of the service to migrate'
+        required: true
+
+jobs:
+  pre-run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pre-run testing
+        run: |
+          echo "Check that bd2 RLB can serve the request"
+          echo "Here is your pre-run resolution" >> $GITHUB_STEP_SUMMARY
+
+  switch-to-10-percent:
+    needs: pre-run-test
+    runs-on: ubuntu-latest
+    environment: ns1update
+    steps:
+      - name: Do 10%
+        run:
+          echo "Setting 10%"
+          echo "Here is your 10% resolution" >> $GITHUB_STEP_SUMMARY"
+
+
+  switch-to-50-percent:
+    needs: pre-run-test
+    runs-on: ubuntu-latest
+    environment: ns1update
+    steps:
+      - name: Do 20%
+        run:
+          echo "Setting 10%"
+          echo "Here is your 10% resolution" >> $GITHUB_STEP_SUMMARY"
