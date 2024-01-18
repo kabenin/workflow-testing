@@ -10,7 +10,10 @@ on:
       dc:
         description: 'CHI1 or ASH1'
         required: true
-        default: 'CHI1'
+        type: choice
+        options:
+          - chi1
+          - ash1
 
 jobs:
   pre-run-test:
