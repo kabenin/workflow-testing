@@ -1,5 +1,5 @@
 ---
-name: Migrate a service gradually ${{ inputs.fqdn }}
+name: Migrate a service
 
 on:
   workflow_dispatch:
