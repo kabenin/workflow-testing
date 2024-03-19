@@ -6,7 +6,7 @@ on:
 
 jobs:
   thejob:
-    stragety:
+    strategy:
       matrix:
         - path: /a/b/c
           secret_name: secret1
