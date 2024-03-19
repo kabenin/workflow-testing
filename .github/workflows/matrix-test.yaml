@@ -19,5 +19,6 @@ jobs:
         working-directory: ${{ matrix.presets.path }}
     steps:
       - run:
+          pwd
           echo "path '${{ matrix.presets.path }}'"
           echo "secret '${{ matrix.presets.secret_name }}'"
