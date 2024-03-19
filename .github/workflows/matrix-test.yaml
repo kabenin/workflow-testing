@@ -6,6 +6,7 @@ on:
 
 jobs:
   thejob:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         - path: /a/b/c
