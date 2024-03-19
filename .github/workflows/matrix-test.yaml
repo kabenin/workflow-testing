@@ -17,5 +17,5 @@ jobs:
 
     steps:
       - run:
-          echo "path '${{ matrix.path }}'"
-          echo "secret '${{ matrix.secret_name }}'"
+          echo "path '${{ matrix.presets.path }}'"
+          echo "secret '${{ matrix.presets.secret_name }}'"
