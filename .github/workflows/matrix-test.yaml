@@ -10,11 +10,13 @@ jobs:
     strategy:
       matrix:
         presets:
-          - path: /a/b/c
+          - path: /tmp
             secret_name: secret1
-          - path: /some/another/path
+          - path: /
             secret_name: idono
-
+    defaults:
+      run:
+        working-directory: ${{ matrix.presets.path }}
     steps:
       - run:
           echo "path '${{ matrix.presets.path }}'"
