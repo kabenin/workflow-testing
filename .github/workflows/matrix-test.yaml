@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        - path: /a/b/c
-          secret_name: secret1
-        - path: /some/another/path
-          secret_name: idono
+        presets:
+          - path: /a/b/c
+            secret_name: secret1
+          - path: /some/another/path
+            secret_name: idono
 
     steps:
       - run:
